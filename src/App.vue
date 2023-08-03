@@ -1,30 +1,40 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { computed, reactive } from 'vue';
+
+const state = reactive<{
+  start: number;
+  last: number;
+  length: number;
+  count: number
+}>({
+  start: 0,
+  last: 0,
+  length: 2.0,
+  count: 0
+})
+
+const speed = computed(() => {
+  const hours = (state.last - state.start) / (1000 * 3600);
+  const km = state.count * state.length / 1000;
+
+  const speed = km/hours;
+  return Math.round(speed * 10) / 10;
+})
+
+const trigger = () => {
+  const now = Date.now();
+  if (state.start === 0) {
+    state.start = now; 
+  } else {
+    state.count++;
+  }
+  state.last = now;
+}
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <div>{{ speed }} km/h</div>
+    <button @click="trigger">Press me</button>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
