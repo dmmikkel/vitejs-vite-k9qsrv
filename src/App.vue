@@ -30,11 +30,20 @@ const trigger = () => {
   }
   state.last = now;
 }
+
+const reset = () => {
+  state.count = 0;
+  state.start = 0;
+}
 </script>
 
 <template>
   <div>
+    <div>
+      <input type="text" v-model.number="state.length">
+    </div>
     <div>{{ speed }} km/h</div>
-    <button @click="trigger">Press me</button>
+    <button @click="trigger">Trigger</button>
+    <button @click="reset">Reset</button>
   </div>
 </template>
