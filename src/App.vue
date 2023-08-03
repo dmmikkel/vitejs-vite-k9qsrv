@@ -18,7 +18,7 @@ const speed = computed(() => {
   const km = state.count * state.length / 1000;
 
   const speed = km/hours;
-  return Math.round(speed * 10) / 10;
+  return Math.round(speed * 100) / 100;
 })
 
 const trigger = () => {
